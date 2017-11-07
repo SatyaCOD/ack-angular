@@ -1,8 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
-/** runs shake instructions when condition returns a truthy value */
-var ShakeOn = /** @class */ (function () {
+var ShakeOn = (function () {
     function ShakeOn(element) {
         this.element = element;
         this.shakeConstant = false;
@@ -67,7 +66,6 @@ var ShakeOn = /** @class */ (function () {
         this.applyType();
         if (!this.shakeConstant) {
             this.timeout = setTimeout(function () {
-                //$scope.shakeOnController.shakeOn = false
                 _this.onFalse();
                 _this.shakeThen.emit(_this);
             }, this.shakeForMs);
@@ -78,7 +76,6 @@ var ShakeOn = /** @class */ (function () {
                     selector: '[shakeOn]'
                 },] },
     ];
-    /** @nocollapse */
     ShakeOn.ctorParameters = function () { return [
         { type: core_1.ElementRef, },
     ]; };

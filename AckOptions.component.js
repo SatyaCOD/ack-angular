@@ -3,23 +3,36 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var pipes_class_1 = require("./pipes.class");
 var core_1 = require("@angular/core");
 var ack_options_pug_1 = require("./templates/ack-options.pug");
-var AckOptions = /** @class */ (function () {
-    function AckOptions() {
+var AckOptions = (function () {
+    function AckOptions(ElementRef) {
+        this.ElementRef = ElementRef;
         this.array = [];
         this.stylize = true;
         this.multiple = false;
-        //@Input() modelIsArray = false//support array of options to model-array, that array only allows a length of one
-        this.toggleable = false; //multiple must be false
+        this.toggleable = false;
         this.modelChange = new core_1.EventEmitter();
         this.refChange = new core_1.EventEmitter();
     }
-    //constructor(public ElementRef:ElementRef){}
     AckOptions.prototype.ngOnInit = function () {
         var _this = this;
         setTimeout(function () {
-            //this.ref = Object.assign(this,this.ref)
             _this.refChange.emit(_this);
         }, 0);
+    };
+    AckOptions.prototype.ngAfterViewInit = function () {
+        var _this = this;
+        setTimeout(function () { return _this.applyTemplates(); }, 0);
+    };
+    AckOptions.prototype.applyTemplates = function () {
+        var refs = this.inputTemplateRefs && this.inputTemplateRefs._results ? this.inputTemplateRefs : this.templateRefs;
+        for (var x = refs._results.length - 1; x >= 0; --x) {
+            if (refs._results[x]._def.references.option) {
+                this.templateRef = refs._results[x];
+            }
+        }
+        if (!this.templateRef && refs.length) {
+            this.templateRef = refs._results[this.templateRefs.length - 1];
+        }
     };
     AckOptions.prototype.selectItem = function (item) {
         var value = this.getArrayItemValue(item);
@@ -44,7 +57,7 @@ var AckOptions = /** @class */ (function () {
     };
     AckOptions.prototype.emitChange = function () {
         this.modelChange.emit(this.model);
-        var form = getParentByTagName(this.templateRef.elementRef.nativeElement, 'form');
+        var form = getParentByTagName(this.ElementRef.nativeElement, 'form');
         if (form)
             this.fireFormEvents(form);
     };
@@ -112,11 +125,17 @@ var AckOptions = /** @class */ (function () {
     };
     AckOptions.prototype.getItemClass = function (item) {
         var selected = this.isItemSelected(item);
-        return {
-            'cursor-pointer pad-h pad-v-sm border-grey-6x border-bottom': this.stylize,
-            'bg-warning': this.stylize && selected,
-            'hover-bg-grey-5x': this.stylize && !selected
-        };
+        var string = '';
+        if (this.stylize) {
+            string += 'cursor-pointer pad-h pad-v-sm border-grey-6x border-bottom ';
+        }
+        if (this.stylize && selected) {
+            string += 'bg-warning ';
+        }
+        if (this.stylize && !selected) {
+            string += 'hover-bg-grey-5x ';
+        }
+        return string;
     };
     AckOptions.decorators = [
         { type: core_1.Component, args: [{
@@ -124,14 +143,16 @@ var AckOptions = /** @class */ (function () {
                     template: ack_options_pug_1.string
                 },] },
     ];
-    /** @nocollapse */
-    AckOptions.ctorParameters = function () { return []; };
+    AckOptions.ctorParameters = function () { return [
+        { type: core_1.ElementRef, },
+    ]; };
     AckOptions.propDecorators = {
         'array': [{ type: core_1.Input },],
         'stylize': [{ type: core_1.Input },],
         'multiple': [{ type: core_1.Input },],
         'toggleable': [{ type: core_1.Input },],
-        'templateRef': [{ type: core_1.ContentChild, args: [core_1.TemplateRef,] }, { type: core_1.Input },],
+        'templateRefs': [{ type: core_1.ContentChildren, args: [core_1.TemplateRef,] },],
+        'inputTemplateRefs': [{ type: core_1.Input },],
         'model': [{ type: core_1.Input },],
         'modelChange': [{ type: core_1.Output },],
         'ref': [{ type: core_1.Input },],

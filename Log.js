@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
-var Log = /** @class */ (function () {
+var Log = (function () {
     function Log() {
         this.log = [];
         this.maxLog = 80;
@@ -11,7 +11,7 @@ var Log = /** @class */ (function () {
         this.log.unshift(ob);
         if (this.maxLog) {
             while (this.log.length > this.maxLog) {
-                this.log.pop(); //remove last
+                this.log.pop();
             }
         }
         return e;
@@ -32,7 +32,6 @@ var Log = /** @class */ (function () {
     Log.decorators = [
         { type: core_1.Injectable },
     ];
-    /** @nocollapse */
     Log.ctorParameters = function () { return []; };
     return Log;
 }());

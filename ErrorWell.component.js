@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var prefx_1 = require("./prefx");
 var error_well_pug_1 = require("./templates/error-well.pug");
-var ErrorWell = /** @class */ (function () {
+var ErrorWell = (function () {
     function ErrorWell() {
         this.message = 'Unexpected Error Occured';
         this.closable = true;
@@ -25,7 +25,6 @@ var ErrorWell = /** @class */ (function () {
                     animations: prefx_1.fxArray
                 },] },
     ];
-    /** @nocollapse */
     ErrorWell.ctorParameters = function () { return []; };
     ErrorWell.propDecorators = {
         'message': [{ type: core_1.Input },],

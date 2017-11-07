@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var prefx_1 = require("../prefx");
 var ack_modal_pug_1 = require("./templates/ack-modal.pug");
-var AckModal = /** @class */ (function () {
+var AckModal = (function () {
     function AckModal(element) {
         var _this = this;
         this.element = element;
@@ -13,7 +13,6 @@ var AckModal = /** @class */ (function () {
         this.backgroundColorChange = new core_1.EventEmitter();
         this.refChange = new core_1.EventEmitter();
         this.showModelChange = new core_1.EventEmitter();
-        //after possible double click, close on outside content click
         setTimeout(function () { return _this.clickListenForClose(); }, 400);
     }
     AckModal.prototype.clickListenForClose = function () {
@@ -53,7 +52,6 @@ var AckModal = /** @class */ (function () {
                     animations: prefx_1.fxArray
                 },] },
     ];
-    /** @nocollapse */
     AckModal.ctorParameters = function () { return [
         { type: core_1.ElementRef, },
     ]; };

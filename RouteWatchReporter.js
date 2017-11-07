@@ -1,17 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-//import { StateService,TransitionService,Transition } from "ui-router-ng2";
 var router_1 = require("@angular/router");
 var core_1 = require("@angular/core");
-/** A stateful connection to ui-router history
- - .stateChange() with arguments MUST be called at every state change
- - Has 99% accuracy of knowing if OS back or forward button has been used
-   - Their is no web event for knowing if OS button is used.
-*/
-var RouteWatchReporter = /** @class */ (function () {
-    //public stateService : StateService
-    //public activatedRoute : ActivatedRoute
-    //static parameters = [[Router, ActivatedRoute]]
+var RouteWatchReporter = (function () {
     function RouteWatchReporter(router, activatedRoute) {
         var _this = this;
         this.router = router;
@@ -27,7 +18,7 @@ var RouteWatchReporter = /** @class */ (function () {
         this.$history = [];
         router.events.subscribe(function (event) {
             if (event.constructor == router_1.NavigationEnd) {
-                var params = {}; //COMING REALLY SOON
+                var params = {};
                 var current = _this.getCurrent();
                 _this.recordStateChange(current.config, current.params);
             }
@@ -41,7 +32,6 @@ var RouteWatchReporter = /** @class */ (function () {
         return {
             config: target.routeConfig,
             params: target.snapshot.params
-            //...target.routeConfig//may want to do away with this
         };
     };
     RouteWatchReporter.prototype.getCurrentConfig = function () {
@@ -102,7 +92,6 @@ var RouteWatchReporter = /** @class */ (function () {
             ++this.historyPos;
         }
         else {
-            //const $state = this.$state()
             this.historyPos = 0;
             var hist = { name: toState.name, params: toParams };
             if (!Object.keys(toParams).length) {
@@ -142,7 +131,6 @@ var RouteWatchReporter = /** @class */ (function () {
     };
     RouteWatchReporter.prototype.watchDocByCallbacks = function ($document, callbacks) {
         $document.addEventListener('mouseout', callbacks.isBackButton);
-        //$document.addEventListener('mouseover', callbacks.mouseover)
         $document.addEventListener('mousedown', callbacks.isNotBackButton);
     };
     RouteWatchReporter.prototype.unwatchDocByCallbacks = function ($document, callbacks) {
@@ -153,7 +141,6 @@ var RouteWatchReporter = /** @class */ (function () {
     RouteWatchReporter.decorators = [
         { type: core_1.Injectable },
     ];
-    /** @nocollapse */
     RouteWatchReporter.ctorParameters = function () { return [
         { type: router_1.Router, },
         { type: router_1.ActivatedRoute, },

@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
-var ErrorLog = /** @class */ (function () {
+var ErrorLog = (function () {
     function ErrorLog() {
         this.log = [];
         this.maxLog = 30;
@@ -25,7 +25,7 @@ var ErrorLog = /** @class */ (function () {
         this.log.unshift(ob);
         if (this.maxLog) {
             while (this.log.length > this.maxLog) {
-                this.log.pop(); //remove last
+                this.log.pop();
             }
         }
         return logObToErrorObject(ob);
@@ -47,7 +47,7 @@ var ErrorLog = /** @class */ (function () {
     ErrorLog.prototype.objectifyError = function (err) {
         var keys = Object.getOwnPropertyNames(err);
         keys.push.apply(keys, Object.keys(err));
-        var recErr = {}; //new Error(err.message || err.name || err.type || 'Unexpected Error Occured')
+        var recErr = {};
         keys.forEach(function (v) { return recErr[v] = err[v]; });
         if (typeof err.stack != 'undefined')
             recErr['stack'] = err.stack;
@@ -59,7 +59,6 @@ var ErrorLog = /** @class */ (function () {
             recErr['arguments'] = err.arguments;
         if (typeof err.type != 'undefined')
             recErr['type'] = err.type;
-        //auto attempt to parse body
         if (err._body && !err.data && err.headers) {
             var contentType = err.headers.get('content-type');
             if (contentType && contentType.toLowerCase() == 'application/json') {
@@ -71,7 +70,6 @@ var ErrorLog = /** @class */ (function () {
         }
         return recErr;
     };
-    /** same as reject but uses native throw instead of native Promise.reject */
     ErrorLog.prototype.rethrow = function (err) {
         var e = this.add(err);
         throw e;
@@ -79,7 +77,6 @@ var ErrorLog = /** @class */ (function () {
     ErrorLog.decorators = [
         { type: core_1.Injectable },
     ];
-    /** @nocollapse */
     ErrorLog.ctorParameters = function () { return []; };
     return ErrorLog;
 }());

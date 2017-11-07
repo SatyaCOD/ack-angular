@@ -1,17 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
-var AckArray = /** @class */ (function () {
+var AckArray = (function () {
     function AckArray() {
         this.refChange = new core_1.EventEmitter();
-        //convenient memory for current page, may not be needed
-        //@Input() page:number = 0
-        //@Output() pageChange:EventEmitter<number> = new EventEmitter()
         this.pageAt = 0;
         this.pages = [];
         this.pagesChange = new core_1.EventEmitter();
         this.arrayChange = new core_1.EventEmitter();
-        //an system of creating an object by keys of array nodes
         this.keyMap = {};
         this.keyMapChange = new core_1.EventEmitter();
     }
@@ -68,7 +64,6 @@ var AckArray = /** @class */ (function () {
         }
         this.pagesChange.emit(this.pages);
     };
-    //looks up id or the item itself is an ID
     AckArray.prototype.getItemId = function (item, itemIndexName) {
         itemIndexName = itemIndexName || this.idKey;
         return itemIndexName ? item[itemIndexName] : item;
@@ -127,7 +122,6 @@ var AckArray = /** @class */ (function () {
                     selector: 'ack-array'
                 },] },
     ];
-    /** @nocollapse */
     AckArray.ctorParameters = function () { return []; };
     AckArray.propDecorators = {
         'idKey': [{ type: core_1.Input },],
